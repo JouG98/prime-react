@@ -10,6 +10,7 @@
     "@types/node": "^16.11.47",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "async-executor-hook": "^0.1.5",
     "primeflex": "^3.2.1",
     "primeicons": "^5.0.0",
     "primereact": "^8.3.0",

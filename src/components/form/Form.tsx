@@ -1,130 +1,119 @@
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import { useEffect } from 'react';
-
-
-import {  InputTextProps } from "primereact/inputtext";
-import { IInputContainerRenderInputParams } from 'react-angular-forms';
-
+import { useAsyncExecutor } from "async-executor-hook";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { InputTextProps } from "primereact/inputtext";
+import { useState } from "react";
+import { IInputContainerRenderInputParams } from "react-angular-forms";
 import {
-    FormControl,
-    FormGroup,
-    useFormGroup,
-    InputContainer,
-    Validators,
-} from 'react-angular-forms';
-// import { WInputText } from './WInputText';
+  FormControl,
+  FormGroup,
+  useFormGroup,
+  InputContainer,
+  Validators,
+  PrettyJson,
+} from "react-angular-forms";
+import { of } from "rxjs";
 
 const createFormGroup = () => {
-    const formGroup = new FormGroup({
-      nombre: new FormControl(null, [Validators.required, Validators.email]),
-      apellido: new FormControl(null, [Validators.required, Validators.email]),
-      direccion: new FormControl(null, [Validators.required, Validators.email]),
-    });
-
-    return formGroup;
-}
-
+  const formGroup = new FormGroup({
+    names: new FormControl(null, [Validators.required]),
+    lastnames: new FormControl(null, [Validators.required]),
+    address: new FormControl(null),
+  });
+  return formGroup;
+};
 
 export const Form = () => {
+  const { getFormGroup, setFormGroup } = useFormGroup();
 
-    // hook de FormGroup
-    const {getFormGroup, setFormGroup} = useFormGroup();
-    const formG = getFormGroup();
+  useAsyncExecutor(() => {}, {
+    source$: of({}),
+    onSuccess: () => {
+      const fg = createFormGroup();
+      setFormGroup(fg);
+      // fg.patchValue({ names: "BRANGY", lastnames: "CASTRO" });
+    },
+  });
 
-    useEffect(() => {
-      const formGrup = createFormGroup();
-      setFormGroup(formGrup);
-    }, [])
-    
-
+  const onClickForm = (e: any) => {
+    e.preventDefault();
+    if (getFormGroup().invalid) {
+      alert("Formulario invalido");
+      return;
+    }
+    console.log(getFormGroup().value);
+  };
 
   return (
     <>
-    
-        <div 
-        className="card p-4 shadow-2 border-round w-full lg:w-6"
-    >
-        <div 
-            className="text-center mb-5"
-        >
-            <div 
-                className="text-900 text-3xl font-medium mb-3"
-            >
-                Welcome Back
-            </div>
+      <div className="card p-4 shadow-2 border-round w-full lg:w-6">
+        <PrettyJson data={getFormGroup().value} />
+        <div className="text-center mb-5">
+          <div className="text-900 text-3xl font-medium mb-3">Welcome Back</div>
         </div>
-
-        <div>
-            <label 
-                htmlFor="email" 
-                className="block text-900 font-medium mb-2"
+        <form onSubmit={onClickForm}>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-900 font-medium mb-2"
             >
-                Email
+              Names
             </label>
-
-            {/* <InputContainer 
-                control={formG.get('nombre') as FormControl}            
-                renderInput={WInputText()}
-            ></InputContainer> */}
-
-            <InputText 
-                type="text" 
-                name='email'
-                // value={email}
-                className="w-full mb-3" 
-                // onChange={ handelChangeInputs }
+            <InputContainer
+              control={getFormGroup().get("names") as FormControl}
+              renderInput={
+                WInputText({
+                  style: { height: 50, width: "100%" },
+                  placeholder: "Escriba algún comentario adicional",
+                }) as any
+              }
             />
-
-            <label 
-                htmlFor="password" 
-                className="block text-900 font-medium mb-2"
+            <label
+              htmlFor="password"
+              className="block text-900 font-medium mb-2"
             >
-                Password
+              Lastnames
             </label>
-
-            <InputText 
-                type="password" 
-                name='password'
-                // value={password}
-                className="w-full mb-3" 
-                // onChange={ handelChangeInputs}
+            <InputContainer
+              control={getFormGroup().get("lastnames") as FormControl}
+              renderInput={
+                WInputText({
+                  style: { height: 50, width: "100%" },
+                  placeholder: "Escriba algún comentario adicional",
+                }) as any
+              }
             />
-
-            <div 
-                className="flex align-items-center justify-content-end mb-6"
+            <label
+              htmlFor="password"
+              className="block text-900 font-medium mb-2"
             >
-                <a 
-                    className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
-                >
-                    Forgot your password?
-                </a>
-            </div>
-
-            <Button 
-                label="Sign In" 
-                icon="pi pi-user" 
-                className="w-full"
-                // onClick={ handleSumit }
+              Address
+            </label>
+            <InputContainer
+              control={getFormGroup().get("address") as FormControl}
+              renderInput={
+                WInputText({
+                  style: { height: 50, width: "100%" },
+                  placeholder: "Escriba algún comentario adicional",
+                }) as any
+              }
             />
-        </div>
-    </div>
+
+            <Button label="Sign In" icon="pi pi-user" className="w-full" />
+          </div>
+        </form>
+      </div>
     </>
+  );
+};
 
-    
-  )
-}
-
-
-
-export const WInputText = (custom: InputTextProps | any = {}) =>
-  (
-        {
-            control: { onChange, value, disabled, onBlur },
-            validationStatus,
-            showErrors,
-        }: IInputContainerRenderInputParams
-    ) => {
+export const WInputText =
+  (custom: InputTextProps | any = {}) =>
+  ({
+    control: { onChange, value, disabled, onBlur },
+    validationStatus,
+    showErrors,
+  }: IInputContainerRenderInputParams) => {
     const type = custom.type ? custom.type : "text";
     let defaultValue = value;
     if (value === null || value === undefined) {
