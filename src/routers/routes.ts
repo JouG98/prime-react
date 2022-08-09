@@ -1,5 +1,5 @@
 import { IRoutes } from "../interfaces";
-import { About, Home } from "../pages";
+import { About, Home, Pokemons } from "../pages";
 
 
 export const routes: IRoutes[] = [
@@ -15,6 +15,13 @@ export const routes: IRoutes[] = [
         name: 'Form',
         path: '/about',
         title: 'Form Page',
+        icon: 'pi pi-user',
+    },
+    {
+        Component: Pokemons,
+        name: 'Call Api',
+        path: '/pokemons',
+        title: 'Get Pokemons',
         icon: 'pi pi-user',
     },
 ]

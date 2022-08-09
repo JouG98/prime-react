@@ -2,6 +2,10 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { useEffect } from 'react';
 
+
+import {  InputTextProps } from "primereact/inputtext";
+import { IInputContainerRenderInputParams } from 'react-angular-forms';
+
 import {
     FormControl,
     FormGroup,
@@ -59,10 +63,10 @@ export const Form = () => {
                 Email
             </label>
 
-            <InputContainer 
+            {/* <InputContainer 
                 control={formG.get('nombre') as FormControl}            
                 renderInput={WInputText()}
-            ></InputContainer>
+            ></InputContainer> */}
 
             <InputText 
                 type="text" 
@@ -112,8 +116,6 @@ export const Form = () => {
 }
 
 
-import {  InputTextProps } from "primereact/inputtext";
-import { IInputContainerRenderInputParams } from 'react-angular-forms';
 
 export const WInputText = (custom: InputTextProps | any = {}) =>
   (
