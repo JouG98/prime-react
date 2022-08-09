@@ -12,9 +12,9 @@ export const routes: IRoutes[] = [
     },
     {
         Component: About,
-        name: 'About',
+        name: 'Form',
         path: '/about',
-        title: 'About Page',
+        title: 'Form Page',
         icon: 'pi pi-user',
     },
 ]
