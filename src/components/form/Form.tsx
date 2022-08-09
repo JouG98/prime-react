@@ -1,8 +1,6 @@
 import { useAsyncExecutor } from "async-executor-hook";
-import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputTextProps } from "primereact/inputtext";
-import { useState } from "react";
 import { IInputContainerRenderInputParams } from "react-angular-forms";
 import {
   FormControl,
@@ -13,6 +11,7 @@ import {
   PrettyJson,
 } from "react-angular-forms";
 import { of } from "rxjs";
+import styled from "styled-components";
 
 const createFormGroup = () => {
   const formGroup = new FormGroup({
@@ -99,13 +98,30 @@ export const Form = () => {
               }
             />
 
-            <Button label="Sign In" icon="pi pi-user" className="w-full" />
+            <ButtonNew>SEND</ButtonNew>
           </div>
         </form>
       </div>
     </>
   );
 };
+
+interface IButtonNew {
+  bg?: string;
+}
+
+export const ButtonNew = styled.button<IButtonNew>`
+  background-color: ${(props) => props.bg || "#002556"};
+  border-radius: 8px;
+  width: 100%;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  &:hover {
+    background-color: ${(props) => `${props.bg}80` || "#00255680"};
+  }
+`;
 
 export const WInputText =
   (custom: InputTextProps | any = {}) =>
