@@ -10,9 +10,11 @@ import { IRespAPIPokemon, Result } from "../../interfaces";
 export const PokeList = () => {
   const [selectd, setSelectd] = useState<string | null>(null);
   const [count, setcount] = useState(0);
+
   const searchPokemon = useAsyncExecutor(
     (params) => {
       return RestApi.get("api/v1/employees/").pipe(
+        tap(console.log),
         tap((resp: IRespAPIPokemon) => setcount(resp.count)),
         pluck("results"),
         map((item: Result[]) => {

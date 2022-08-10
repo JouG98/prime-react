@@ -1,5 +1,5 @@
 import { IRoutes } from "../interfaces";
-import { About, Home, Pokemons } from "../pages";
+import { About, Home, ObservableApi, Pokemons, RectAngular } from "../pages";
 
 
 export const routes: IRoutes[] = [
@@ -22,6 +22,20 @@ export const routes: IRoutes[] = [
         name: 'Call Api',
         path: '/pokemons',
         title: 'Get Pokemons',
+        icon: 'pi pi-user',
+    },
+    {
+        Component: RectAngular,
+        name: 'RectAngular',
+        path: '/rectAngular',
+        title: 'RectAngular',
+        icon: 'pi pi-user',
+    },
+    {
+        Component: ObservableApi,
+        name: 'ObservableApi',
+        path: '/observableapi',
+        title: 'ObservableApi',
         icon: 'pi pi-user',
     },
 ]

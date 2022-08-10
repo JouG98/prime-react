@@ -56,7 +56,12 @@ export const SingIn = () => {
             Forgot your password?
           </a>
         </div>
-        <ButtonNew bg="#1F7144"> SEND</ButtonNew>
+        <ButtonNew 
+          bg="#1F7144"
+          onClick={handleSumit}
+        > 
+          SEND
+        </ButtonNew>
         {/* <Button
           label="Sign In"
           icon="pi pi-user"
